@@ -19,6 +19,8 @@
   --red:    #e05555;
   --green:  #2ecc71;
   --blue:   #4d9de0;
+  --purple: #9b59b6;
+  --orange: #e67e22;
   --muted:  #6b7fa0;
   --border: rgba(201,168,76,0.2);
   --bord2:  rgba(255,255,255,0.07);
@@ -29,18 +31,54 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
+body{
+  background-color:#020814;
+  background-image:
+    /* Radial gold glow top-right */
+    radial-gradient(ellipse 700px 500px at 90% -10%, rgba(201,168,76,0.13) 0%, transparent 70%),
+    /* Radial blue glow bottom-left */
+    radial-gradient(ellipse 600px 500px at -10% 110%, rgba(30,80,160,0.18) 0%, transparent 65%),
+    /* Subtle green accent centre */
+    radial-gradient(ellipse 400px 350px at 50% 60%, rgba(46,204,113,0.05) 0%, transparent 60%),
+    /* Fine diagonal grid lines */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 38px,
+      rgba(201,168,76,0.025) 38px,
+      rgba(201,168,76,0.025) 39px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 38px,
+      rgba(255,255,255,0.018) 38px,
+      rgba(255,255,255,0.018) 39px
+    ),
+    /* Base deep navy */
+    linear-gradient(160deg, #030d1f 0%, #020810 50%, #010611 100%);
+  color:var(--cream);font-family:var(--sans);min-height:100vh;overflow-x:hidden;
+}
 ::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--navy);}
+::-webkit-scrollbar-track{background:#020814;}
 ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
 
-/* BG ORBS */
+/* BG ORBS — kept for subtle animated shimmer */
 .bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.06;animation:drift 18s ease-in-out infinite alternate;}
-.o1{width:700px;height:700px;background:var(--gold);top:-200px;right:-200px;}
-.o2{width:500px;height:500px;background:var(--blue);bottom:-200px;left:-200px;animation-delay:-9s;}
-.o3{width:350px;height:350px;background:var(--green);top:50%;left:30%;animation-delay:-5s;}
-@keyframes drift{from{transform:translate(0,0) scale(1);}to{transform:translate(40px,50px) scale(1.12);}}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);animation:drift 22s ease-in-out infinite alternate;}
+.o1{width:800px;height:800px;background:radial-gradient(circle,rgba(201,168,76,0.09),transparent 70%);top:-300px;right:-250px;}
+.o2{width:600px;height:600px;background:radial-gradient(circle,rgba(30,100,200,0.1),transparent 70%);bottom:-250px;left:-200px;animation-delay:-11s;}
+.o3{width:400px;height:400px;background:radial-gradient(circle,rgba(46,204,113,0.06),transparent 70%);top:40%;left:35%;animation-delay:-6s;}
+/* Corner decorative hex-grid overlay */
+.bg-orbs::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle 1px at center, rgba(201,168,76,0.3) 0%, transparent 100%);
+  background-size:48px 48px;
+  opacity:0.15;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+}
+@keyframes drift{from{transform:translate(0,0) scale(1);}to{transform:translate(50px,60px) scale(1.15);}}
 
 /* PAGE MANAGER */
 .page{display:none;position:relative;z-index:1;animation:fadeUp .5s ease;}
@@ -51,57 +89,25 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
    WELCOME PAGE
 ═══════════════════════════ */
 .welcome-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;position:relative;}
-
 .welcome-logo-wrap{display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:48px;}
-.welcome-logo-mark{
-  width:56px;height:56px;background:linear-gradient(135deg,var(--gold),var(--gold2));
-  border-radius:14px;display:flex;align-items:center;justify-content:center;
-  font-family:var(--serif);font-weight:900;color:var(--navy);font-size:26px;
-  box-shadow:0 0 40px rgba(201,168,76,0.4);
-  animation:pulse-glow 3s ease-in-out infinite;
-}
+.welcome-logo-mark{width:56px;height:56px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;color:var(--navy);font-size:26px;box-shadow:0 0 40px rgba(201,168,76,0.4);animation:pulse-glow 3s ease-in-out infinite;}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 30px rgba(201,168,76,0.3);}50%{box-shadow:0 0 60px rgba(201,168,76,0.6);}}
 .welcome-brand-name{font-family:var(--serif);font-size:32px;font-weight:900;color:var(--white);}
 .welcome-brand-name span{color:var(--gold2);}
-
-.welcome-tag{
-  display:inline-block;background:rgba(201,168,76,0.1);border:1px solid var(--border);
-  color:var(--gold2);font-size:11px;font-family:var(--mono);padding:6px 16px;
-  border-radius:20px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
-}
-
-.welcome-headline{
-  font-family:var(--serif);font-size:clamp(36px,6vw,72px);font-weight:900;
-  line-height:1.05;color:var(--white);margin-bottom:24px;max-width:800px;
-}
+.welcome-tag{display:inline-block;background:rgba(201,168,76,0.1);border:1px solid var(--border);color:var(--gold2);font-size:11px;font-family:var(--mono);padding:6px 16px;border-radius:20px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;}
+.welcome-headline{font-family:var(--serif);font-size:clamp(36px,6vw,72px);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:24px;max-width:800px;}
 .welcome-headline em{color:var(--gold2);font-style:italic;}
-
 .welcome-desc{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto 48px;line-height:1.7;font-weight:300;}
-
-.welcome-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:16px 40px;background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:var(--navy);border:none;border-radius:var(--r12);font-family:var(--sans);
-  font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.5px;
-  box-shadow:0 8px 32px rgba(201,168,76,0.35);transition:all .3s;
-}
+.welcome-cta{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border:none;border-radius:var(--r12);font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.5px;box-shadow:0 8px 32px rgba(201,168,76,0.35);transition:all .3s;}
 .welcome-cta:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(201,168,76,0.5);}
 .welcome-cta .arr{transition:transform .3s;}
 .welcome-cta:hover .arr{transform:translateX(4px);}
-
 .welcome-stats{display:flex;gap:48px;justify-content:center;margin-top:64px;}
 .wstat{text-align:center;}
 .wstat-val{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--gold2);}
 .wstat-lbl{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
-
-.welcome-features{
-  display:flex;gap:20px;margin-top:56px;flex-wrap:wrap;justify-content:center;max-width:820px;
-}
-.wfeat{
-  flex:1;min-width:220px;padding:20px 22px;background:rgba(255,255,255,0.03);
-  border:1px solid var(--bord2);border-radius:var(--r12);text-align:left;
-  transition:border-color .3s,transform .3s;
-}
+.welcome-features{display:flex;gap:20px;margin-top:56px;flex-wrap:wrap;justify-content:center;max-width:820px;}
+.wfeat{flex:1;min-width:220px;padding:20px 22px;background:rgba(255,255,255,0.03);border:1px solid var(--bord2);border-radius:var(--r12);text-align:left;transition:border-color .3s,transform .3s;}
 .wfeat:hover{border-color:var(--border);transform:translateY(-4px);}
 .wfeat-icon{font-size:26px;margin-bottom:10px;}
 .wfeat-title{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;}
@@ -111,11 +117,7 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
    AUTH PAGES
 ═══════════════════════════ */
 .auth-page{min-height:100vh;display:flex;align-items:stretch;}
-.auth-left{
-  flex:1;background:linear-gradient(135deg,var(--navy2),var(--navy3));
-  display:flex;flex-direction:column;justify-content:center;padding:64px;
-  border-right:1px solid var(--border);
-}
+.auth-left{flex:1;background:linear-gradient(135deg,var(--navy2),var(--navy3));display:flex;flex-direction:column;justify-content:center;padding:64px;border-right:1px solid var(--border);}
 .auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:56px;cursor:pointer;}
 .auth-logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;color:var(--navy);font-size:20px;}
 .auth-brand-name{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--white);}
@@ -128,131 +130,146 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
 .auth-feat-icon{font-size:22px;}
 .auth-feat-text{font-size:12px;color:var(--muted);font-family:var(--mono);}
 .auth-feat-text strong{color:var(--cream);display:block;margin-bottom:2px;font-size:13px;}
-
 .auth-right{width:480px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 48px;}
 .auth-card{width:100%;max-width:380px;}
 .auth-card h2{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--white);margin-bottom:6px;}
 .auth-card p.sub{font-size:12px;color:var(--muted);margin-bottom:28px;font-family:var(--mono);}
-
 .form-field{margin-bottom:16px;}
 .form-field label{display:block;font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
-.form-field input,.form-field select{
-  width:100%;background:var(--navy3);border:1px solid var(--bord2);color:var(--cream);
-  padding:12px 16px;border-radius:var(--r8);font-size:14px;font-family:var(--mono);
-  outline:none;transition:all .25s;
-}
+.form-field input,.form-field select{width:100%;background:var(--navy3);border:1px solid var(--bord2);color:var(--cream);padding:12px 16px;border-radius:var(--r8);font-size:14px;font-family:var(--mono);outline:none;transition:all .25s;}
 .form-field input:focus,.form-field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);background:var(--navy4);}
 .form-field input::placeholder{color:var(--muted);}
-
-.btn-gold{
-  width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:var(--navy);border:none;border-radius:var(--r8);font-family:var(--sans);
-  font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.5px;
-  transition:all .3s;box-shadow:0 4px 20px rgba(201,168,76,.25);
-}
+.btn-gold{width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border:none;border-radius:var(--r8);font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .3s;box-shadow:0 4px 20px rgba(201,168,76,.25);}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,.4);}
-
 .auth-switch{text-align:center;margin-top:18px;font-size:12px;color:var(--muted);}
 .auth-switch a{color:var(--gold2);cursor:pointer;text-decoration:none;}
 .auth-switch a:hover{text-decoration:underline;}
-
 .auth-error{background:rgba(224,85,85,.1);border:1px solid rgba(224,85,85,.4);color:var(--red);font-size:12px;font-family:var(--mono);padding:10px 14px;border-radius:var(--r8);margin-bottom:14px;display:none;}
 
 /* ═══════════════════════════
    MAIN APP
 ═══════════════════════════ */
 .app-layout{display:flex;min-height:100vh;}
-
-.sidebar{
-  width:240px;flex-shrink:0;background:var(--navy2);border-right:1px solid var(--bord2);
-  display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;
-}
+.sidebar{width:240px;flex-shrink:0;background:var(--navy2);border-right:1px solid var(--bord2);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;}
 .sidebar-brand{padding:22px 20px 18px;border-bottom:1px solid var(--bord2);display:flex;align-items:center;gap:10px;cursor:pointer;}
 .sb-logo{width:34px;height:34px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;color:var(--navy);font-size:17px;}
 .sb-name{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--white);}
 .sb-name span{color:var(--gold2);}
-
 .sidebar-user{padding:14px 20px;border-bottom:1px solid var(--bord2);display:flex;align-items:center;gap:12px;}
 .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--navy);}
 .user-info-name{font-size:13px;font-weight:600;color:var(--cream);}
 .user-info-role{font-size:10px;font-family:var(--mono);color:var(--muted);}
-
 .sidebar-nav{flex:1;padding:16px 12px;overflow-y:auto;}
 .nav-section-label{font-size:9px;font-family:var(--mono);color:var(--muted);letter-spacing:2px;text-transform:uppercase;padding:8px 8px 6px;margin-top:8px;}
-.nav-item{
-  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r8);
-  cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);
-  transition:all .2s;margin-bottom:2px;border:1px solid transparent;
-}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r8);cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:all .2s;margin-bottom:2px;border:1px solid transparent;}
 .nav-item:hover{color:var(--cream);background:rgba(255,255,255,.04);}
 .nav-item.active{color:var(--gold2);background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.2);}
 .nav-item .ni{font-size:17px;width:20px;text-align:center;}
-
 .sidebar-bottom{padding:16px;border-top:1px solid var(--bord2);}
-.logout-btn{
-  width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;
-  border-radius:var(--r8);cursor:pointer;font-size:13px;color:var(--muted);
-  background:none;border:1px solid var(--bord2);font-family:var(--sans);transition:all .2s;
-}
+.logout-btn{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r8);cursor:pointer;font-size:13px;color:var(--muted);background:none;border:1px solid var(--bord2);font-family:var(--sans);transition:all .2s;}
 .logout-btn:hover{color:var(--red);border-color:rgba(224,85,85,.3);}
-
 .main-content{margin-left:240px;flex:1;min-height:100vh;}
-
-.app-topbar{
-  height:62px;border-bottom:1px solid var(--bord2);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;background:rgba(5,12,30,.9);backdrop-filter:blur(20px);
-  position:sticky;top:0;z-index:40;
-}
+.app-topbar{height:62px;border-bottom:1px solid var(--bord2);display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(5,12,30,.9);backdrop-filter:blur(20px);position:sticky;top:0;z-index:40;}
 .topbar-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--white);}
 .topbar-right{display:flex;align-items:center;gap:16px;}
 .topbar-badge{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--green);font-size:11px;font-family:var(--mono);padding:4px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;}
+.role-badge{font-size:11px;font-family:var(--mono);padding:4px 12px;border-radius:20px;border:1px solid;}
+.role-badge.analyst{background:rgba(77,157,224,.1);border-color:rgba(77,157,224,.3);color:var(--blue);}
+.role-badge.manager{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.3);color:var(--gold2);}
+.role-badge.admin{background:rgba(155,89,182,.1);border-color:rgba(155,89,182,.3);color:var(--purple);}
+.role-badge.officer{background:rgba(46,204,113,.1);border-color:rgba(46,204,113,.3);color:var(--green);}
 .live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1.8s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-
 .content-area{padding:28px 32px;}
-
 .section-content{display:none;}
 .section-content.active{display:block;animation:fadeUp .4s ease;}
 
 /* ═══════════════════════════
-   DASHBOARD
+   SHARED DASHBOARD COMPONENTS
 ═══════════════════════════ */
-.dash-welcome-banner{
-  background:linear-gradient(135deg,var(--navy3),var(--navy4));
-  border:1px solid var(--border);border-radius:var(--r16);padding:28px 32px;
-  margin-bottom:24px;position:relative;overflow:hidden;
-}
+.dash-welcome-banner{background:linear-gradient(135deg,var(--navy3),var(--navy4));border:1px solid var(--border);border-radius:var(--r16);padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden;}
 .dash-welcome-banner::after{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(201,168,76,.15),transparent 70%);}
 .dash-welcome-banner h2{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--white);margin-bottom:6px;}
-.dash-welcome-banner p{color:var(--muted);font-size:13px;max-width:500px;line-height:1.6;}
+.dash-welcome-banner p{color:var(--muted);font-size:13px;max-width:600px;line-height:1.6;}
 .welcome-tag-sm{display:inline-block;background:rgba(201,168,76,.15);border:1px solid var(--border);color:var(--gold2);font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:1px;}
-
+.role-banner-tag{display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:1px;}
+.role-banner-tag.analyst{background:rgba(77,157,224,.15);border:1px solid rgba(77,157,224,.3);color:var(--blue);}
+.role-banner-tag.manager{background:rgba(201,168,76,.15);border:1px solid var(--border);color:var(--gold2);}
+.role-banner-tag.admin{background:rgba(155,89,182,.15);border:1px solid rgba(155,89,182,.3);color:var(--purple);}
+.role-banner-tag.officer{background:rgba(46,204,113,.15);border:1px solid rgba(46,204,113,.3);color:var(--green);}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.kpi-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
 .kpi-card{background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r12);padding:18px 20px;transition:all .3s;}
 .kpi-card:hover{border-color:var(--border);box-shadow:0 0 30px rgba(201,168,76,.08);}
 .kpi-icon{font-size:22px;margin-bottom:10px;}
 .kpi-val{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--white);}
 .kpi-label{font-size:10px;font-family:var(--mono);color:var(--muted);margin-top:4px;letter-spacing:.5px;text-transform:uppercase;}
 .kpi-delta{font-size:10px;font-family:var(--mono);margin-top:5px;color:var(--green);}
+.kpi-delta.red{color:var(--red);}
+.kpi-delta.blue{color:var(--blue);}
+.kpi-delta.gold{color:var(--gold2);}
 
-/* ═══════════════════════════
-   PREDICTION SELECTOR (NEW)
-═══════════════════════════ */
+/* Two-column layout for cards */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:20px;}
+.full-col{grid-column:1/-1;}
+.info-card{background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);padding:22px;transition:border-color .3s;}
+.info-card:hover{border-color:var(--border);}
+.info-card h3{font-family:var(--serif);font-size:16px;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.info-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:12px;font-family:var(--mono);color:var(--muted);}
+.info-card ul li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bord2);}
+.info-card ul li:last-child{border-bottom:none;}
+
+/* Action cards for role dashboards */
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.action-card{background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r12);padding:20px;cursor:pointer;transition:all .3s;text-align:center;}
+.action-card:hover{transform:translateY(-3px);border-color:var(--border);box-shadow:0 8px 30px rgba(0,0,0,.3);}
+.action-card-icon{font-size:32px;margin-bottom:12px;}
+.action-card-title{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px;}
+.action-card-desc{font-size:11px;color:var(--muted);font-family:var(--mono);line-height:1.5;}
+.action-card-btn{display:inline-block;margin-top:12px;font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;background:rgba(201,168,76,.1);border:1px solid var(--border);color:var(--gold2);}
+
+/* Alert list */
+.alert-list{display:flex;flex-direction:column;gap:10px;}
+.alert-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(255,255,255,.02);border:1px solid var(--bord2);border-radius:var(--r8);}
+.alert-item.danger{border-color:rgba(224,85,85,.25);background:rgba(224,85,85,.05);}
+.alert-item.warning{border-color:rgba(201,168,76,.25);background:rgba(201,168,76,.05);}
+.alert-item.success{border-color:rgba(46,204,113,.25);background:rgba(46,204,113,.05);}
+.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.alert-dot.danger{background:var(--red);}
+.alert-dot.warning{background:var(--gold2);}
+.alert-dot.success{background:var(--green);}
+.alert-text{font-size:12px;font-family:var(--mono);color:var(--muted);line-height:1.5;}
+.alert-text strong{color:var(--cream);display:block;font-size:12px;margin-bottom:2px;}
+
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono);}
+.data-table th{text-align:left;font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--bord2);}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--cream);}
+.data-table tr:hover td{background:rgba(255,255,255,.02);}
+.badge-sm{font-size:10px;padding:2px 8px;border-radius:10px;font-family:var(--mono);}
+.badge-sm.green{background:rgba(46,204,113,.12);color:var(--green);}
+.badge-sm.red{background:rgba(224,85,85,.12);color:var(--red);}
+.badge-sm.blue{background:rgba(77,157,224,.12);color:var(--blue);}
+.badge-sm.gold{background:rgba(201,168,76,.12);color:var(--gold2);}
+.badge-sm.purple{background:rgba(155,89,182,.12);color:var(--purple);}
+
+/* Section header */
+.sec-head{margin-bottom:24px;}
+.sec-tag{display:inline-block;background:rgba(201,168,76,.1);border:1px solid var(--border);color:var(--gold2);font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;margin-bottom:10px;letter-spacing:1.5px;text-transform:uppercase;}
+.sec-title{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(255,255,255,.04);border:1px solid var(--bord2);border-radius:var(--r8);color:var(--muted);font-size:12px;font-family:var(--mono);cursor:pointer;transition:all .2s;margin-bottom:20px;}
+.back-btn:hover{color:var(--cream);border-color:var(--border);}
+
+/* Prediction forms */
 .pred-selector-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;}
-.pred-selector-card{
-  background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);
-  padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;
-}
-.pred-selector-card::before{
-  content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;
-  background:linear-gradient(135deg,rgba(201,168,76,.05),transparent);
-}
+.pred-selector-card{background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+.pred-selector-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;background:linear-gradient(135deg,rgba(201,168,76,.05),transparent);}
 .pred-selector-card:hover{border-color:var(--border);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3);}
 .pred-selector-card:hover::before{opacity:1;}
 .pred-selector-card.churn-card:hover{border-color:rgba(224,85,85,.4);}
 .pred-selector-card.loan-card:hover{border-color:rgba(46,204,113,.4);}
-
 .psc-icon{font-size:48px;margin-bottom:16px;}
 .psc-title{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--white);margin-bottom:8px;}
 .psc-subtitle{font-size:12px;font-family:var(--mono);color:var(--muted);margin-bottom:16px;}
@@ -260,36 +277,14 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
 .psc-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-family:var(--mono);}
 .psc-badge.red{background:rgba(224,85,85,.12);border:1px solid rgba(224,85,85,.3);color:var(--red);}
 .psc-badge.green{background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.3);color:var(--green);}
-.psc-arrow{
-  position:absolute;bottom:22px;right:22px;width:36px;height:36px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:16px;
-  transition:all .3s;opacity:0.4;
-}
+.psc-arrow{position:absolute;bottom:22px;right:22px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .3s;opacity:0.4;}
 .pred-selector-card:hover .psc-arrow{opacity:1;transform:translateX(3px);}
 .psc-arrow.r{background:rgba(224,85,85,.15);}
 .psc-arrow.g{background:rgba(46,204,113,.15);}
-
 .psc-stats{display:flex;gap:16px;margin-top:12px;}
 .psc-stat{text-align:center;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--r8);}
 .psc-stat-val{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--white);}
 .psc-stat-lbl{font-size:9px;font-family:var(--mono);color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-top:2px;}
-
-/* ═══════════════════════════
-   PREDICTION FORMS
-═══════════════════════════ */
-.sec-head{margin-bottom:24px;}
-.sec-tag{display:inline-block;background:rgba(201,168,76,.1);border:1px solid var(--border);color:var(--gold2);font-size:10px;font-family:var(--mono);padding:4px 12px;border-radius:20px;margin-bottom:10px;letter-spacing:1.5px;text-transform:uppercase;}
-.sec-title{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--white);margin-bottom:6px;}
-.sec-desc{font-size:13px;color:var(--muted);}
-
-.back-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:8px 16px;
-  background:rgba(255,255,255,.04);border:1px solid var(--bord2);
-  border-radius:var(--r8);color:var(--muted);font-size:12px;font-family:var(--mono);
-  cursor:pointer;transition:all .2s;margin-bottom:20px;
-}
-.back-btn:hover{color:var(--cream);border-color:var(--border);}
-
 .pred-wrap{display:grid;grid-template-columns:1fr;gap:20px;max-width:640px;}
 .pred-card{background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);overflow:hidden;transition:border-color .3s;}
 .pred-card:hover{border-color:var(--border);}
@@ -300,27 +295,16 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
 .pred-header-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--white);}
 .pred-header-sub{font-size:11px;font-family:var(--mono);color:var(--muted);margin-top:2px;}
 .pred-body{padding:22px 24px;}
-
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .frow.single{grid-template-columns:1fr;}
 .field-lbl{display:block;font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;}
-.fi,.fs{
-  width:100%;background:var(--navy3);border:1px solid var(--bord2);color:var(--cream);
-  padding:10px 14px;border-radius:var(--r8);font-size:13px;font-family:var(--mono);
-  outline:none;transition:all .25s;
-}
+.fi,.fs{width:100%;background:var(--navy3);border:1px solid var(--bord2);color:var(--cream);padding:10px 14px;border-radius:var(--r8);font-size:13px;font-family:var(--mono);outline:none;transition:all .25s;}
 .fi:focus,.fs:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
-
-.run-btn{
-  width:100%;padding:12px;border:none;border-radius:var(--r8);
-  font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;
-  letter-spacing:.5px;transition:all .3s;margin-top:6px;
-}
+.run-btn{width:100%;padding:12px;border:none;border-radius:var(--r8);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .3s;margin-top:6px;}
 .run-btn.r{background:linear-gradient(135deg,#c0392b,var(--red));color:#fff;box-shadow:0 4px 20px rgba(224,85,85,.25);}
 .run-btn.r:hover{box-shadow:0 8px 30px rgba(224,85,85,.4);transform:translateY(-2px);}
 .run-btn.g{background:linear-gradient(135deg,#27ae60,var(--green));color:#fff;box-shadow:0 4px 20px rgba(46,204,113,.25);}
 .run-btn.g:hover{box-shadow:0 8px 30px rgba(46,204,113,.4);transform:translateY(-2px);}
-
 .result-box{margin-top:16px;border-radius:var(--r12);padding:0;max-height:0;overflow:hidden;transition:all .4s ease;opacity:0;}
 .result-box.show{max-height:300px;opacity:1;padding:16px;}
 .result-box.danger{background:rgba(224,85,85,.08);border:1px solid rgba(224,85,85,.25);}
@@ -341,12 +325,74 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
 .rb-tag{font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:4px;background:rgba(255,255,255,.07);color:var(--muted);}
 .rb-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid var(--bord2);}
 
-/* ═══════════════════════════════
-   RESPONSIVE
-═══════════════════════════════ */
+/* Progress bars */
+.progress-wrap{margin-bottom:14px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;font-family:var(--mono);color:var(--muted);margin-bottom:5px;}
+.progress-track{height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:3px;transition:width 1.2s ease;}
+.progress-fill.blue{background:linear-gradient(90deg,#2980b9,var(--blue));}
+.progress-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.progress-fill.green{background:linear-gradient(90deg,#27ae60,var(--green));}
+.progress-fill.red{background:linear-gradient(90deg,#c0392b,var(--red));}
+.progress-fill.purple{background:linear-gradient(90deg,#8e44ad,var(--purple));}
+
+/* ═══════════════════════════════════
+   LOAN CRITERIA & APPROACH STYLES
+═══════════════════════════════════ */
+.loan-page-wrap{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start;}
+
+/* Criteria panel */
+.loan-criteria-panel{display:flex;flex-direction:column;gap:16px;position:sticky;top:90px;}
+.criteria-card{background:linear-gradient(135deg,var(--navy2),var(--navy3));border:1px solid var(--bord2);border-radius:var(--r16);overflow:hidden;transition:border-color .3s;}
+.criteria-card:hover{border-color:var(--border);}
+.criteria-card-header{padding:14px 18px;border-bottom:1px solid var(--bord2);display:flex;align-items:center;gap:10px;}
+.criteria-card-header-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.criteria-card-header-icon.green{background:rgba(46,204,113,.15);}
+.criteria-card-header-icon.gold{background:rgba(201,168,76,.15);}
+.criteria-card-header-icon.red{background:rgba(224,85,85,.15);}
+.criteria-card-header-icon.blue{background:rgba(77,157,224,.15);}
+.criteria-card-header-title{font-size:13px;font-weight:600;color:var(--cream);}
+.criteria-card-header-sub{font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:1px;}
+.criteria-body{padding:14px 18px;}
+.criteria-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;}
+.criteria-row:last-child{border-bottom:none;}
+.criteria-key{color:var(--muted);font-family:var(--mono);}
+.criteria-val{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;}
+.criteria-val.good{background:rgba(46,204,113,.12);color:var(--green);}
+.criteria-val.warn{background:rgba(201,168,76,.12);color:var(--gold2);}
+.criteria-val.bad{background:rgba(224,85,85,.12);color:var(--red);}
+.criteria-val.blue{background:rgba(77,157,224,.12);color:var(--blue);}
+
+/* Score legend */
+.score-legend{display:flex;flex-direction:column;gap:6px;padding:12px 18px;}
+.score-row{display:flex;align-items:center;gap:10px;font-size:11px;font-family:var(--mono);}
+.score-swatch{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* Steps approach */
+.approach-card{background:linear-gradient(135deg,var(--navy2),var(--navy3));border:1px solid var(--bord2);border-radius:var(--r16);overflow:hidden;}
+.approach-header{padding:14px 18px;border-bottom:1px solid var(--bord2);display:flex;align-items:center;gap:10px;}
+.approach-steps{padding:16px 18px;display:flex;flex-direction:column;gap:0;}
+.step-item{display:flex;gap:14px;padding-bottom:14px;position:relative;}
+.step-item:last-child{padding-bottom:0;}
+.step-item:not(:last-child)::after{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(201,168,76,.3),transparent);}
+.step-num{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);flex-shrink:0;margin-top:2px;}
+.step-content{}
+.step-title{font-size:13px;font-weight:600;color:var(--cream);margin-bottom:3px;}
+.step-desc{font-size:11px;color:var(--muted);font-family:var(--mono);line-height:1.55;}
+.step-tip{display:inline-block;margin-top:5px;font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);color:var(--gold2);}
+
+/* Right: form + result */
+.loan-form-col{display:flex;flex-direction:column;gap:16px;}
+
+/* Responsive override */
+@media(max-width:1100px){.loan-page-wrap{grid-template-columns:1fr;}}
+
+/* Responsive */
 @media(max-width:900px){
   .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .kpi-grid-3{grid-template-columns:repeat(2,1fr);}
   .pred-selector-grid{grid-template-columns:1fr;}
+  .two-col,.three-col,.action-grid{grid-template-columns:1fr;}
   .auth-left{display:none;}
   .auth-right{width:100%;}
   .sidebar{transform:translateX(-100%);}
@@ -362,72 +408,32 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
   <div class="orb o3"></div>
 </div>
 
-<!-- ════════════════════════════════════
-     PAGE 1: WELCOME
-════════════════════════════════════ -->
+<!-- ════ PAGE 1: WELCOME ════ -->
 <div class="page active" id="page-welcome">
   <div class="welcome-page">
     <div class="welcome-logo-wrap">
       <div class="welcome-logo-mark">DS</div>
       <div class="welcome-brand-name">3DS<span>Bank</span></div>
     </div>
-
     <div class="welcome-tag">✦ AI-Intelligence Churn and Loan Prediction</div>
-
-    <h1 class="welcome-headline">
-      Predict. Analyse.<br><em>Decide smarter.</em>
-    </h1>
-
-    <p class="welcome-desc">
-      Enterprise-grade machine learning for customer churn prediction and loan eligibility — built for modern banking intelligence.
-    </p>
-
-    <button class="welcome-cta" onclick="showPage('page-login')">
-      Get Started <span class="arr">→</span>
-    </button>
-
+    <h1 class="welcome-headline">Predict. Analyse.<br><em>Decide smarter.</em></h1>
+    <p class="welcome-desc">Enterprise-grade machine learning for customer churn prediction and loan eligibility — built for modern banking intelligence.</p>
+    <button class="welcome-cta" onclick="showPage('page-login')">Get Started <span class="arr">→</span></button>
     <div class="welcome-stats">
-      <div class="wstat">
-        <div class="wstat-val">90.46%</div>
-        <div class="wstat-lbl">Churn Accuracy</div>
-      </div>
-      <div class="wstat">
-        <div class="wstat-val">10,000</div>
-        <div class="wstat-lbl">Records Trained</div>
-      </div>
-      <div class="wstat">
-        <div class="wstat-val">7</div>
-        <div class="wstat-lbl">ML Models</div>
-      </div>
-      <div class="wstat">
-        <div class="wstat-val">614</div>
-        <div class="wstat-lbl">Loan Applications</div>
-      </div>
+      <div class="wstat"><div class="wstat-val">90.46%</div><div class="wstat-lbl">Churn Accuracy</div></div>
+      <div class="wstat"><div class="wstat-val">10,000</div><div class="wstat-lbl">Records Trained</div></div>
+      <div class="wstat"><div class="wstat-val">7</div><div class="wstat-lbl">ML Models</div></div>
+      <div class="wstat"><div class="wstat-val">614</div><div class="wstat-lbl">Loan Applications</div></div>
     </div>
-
     <div class="welcome-features">
-      <div class="wfeat">
-        <div class="wfeat-icon">⚠️</div>
-        <div class="wfeat-title">Churn Prediction</div>
-        <div class="wfeat-desc">ExtraTree Classifier · 97.5% recall on 10K customer records</div>
-      </div>
-      <div class="wfeat">
-        <div class="wfeat-icon">🏦</div>
-        <div class="wfeat-title">Loan Eligibility</div>
-        <div class="wfeat-desc">Random Forest · 90.1% approval recall on 614 applications</div>
-      </div>
-      <div class="wfeat">
-        <div class="wfeat-icon">🤖</div>
-        <div class="wfeat-title">Real-time AI Engine</div>
-        <div class="wfeat-desc">Instant predictions with confidence scoring and risk tags</div>
-      </div>
+      <div class="wfeat"><div class="wfeat-icon">⚠️</div><div class="wfeat-title">Churn Prediction</div><div class="wfeat-desc">ExtraTree Classifier · 97.5% recall on 10K customer records</div></div>
+      <div class="wfeat"><div class="wfeat-icon">🏦</div><div class="wfeat-title">Loan Eligibility</div><div class="wfeat-desc">Random Forest · 90.1% approval recall on 614 applications</div></div>
+      <div class="wfeat"><div class="wfeat-icon">🤖</div><div class="wfeat-title">Real-time AI Engine</div><div class="wfeat-desc">Instant predictions with confidence scoring and risk tags</div></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     PAGE 2: LOGIN
-════════════════════════════════════ -->
+<!-- ════ PAGE 2: LOGIN ════ -->
 <div class="page" id="page-login">
   <div class="auth-page">
     <div class="auth-left">
@@ -436,20 +442,11 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
         <div class="auth-brand-name">3DS<span>Bank</span></div>
       </div>
       <h1>Intelligent<br>Banking <em>AI</em><br>Platform</h1>
-      <p>Sign in to access churn prediction, loan eligibility analysis, and your full AI-powered banking dashboard.</p>
+      <p>Sign in to access your role-specific dashboard with churn prediction, loan analysis, and banking intelligence tools.</p>
       <div class="auth-features">
-        <div class="auth-feat">
-          <div class="auth-feat-icon">⚠️</div>
-          <div class="auth-feat-text"><strong>Churn Prediction</strong>ExtraTree Classifier · 90.46% Accuracy</div>
-        </div>
-        <div class="auth-feat">
-          <div class="auth-feat-icon">🏦</div>
-          <div class="auth-feat-text"><strong>Loan Eligibility</strong>Random Forest · Real-time Scoring</div>
-        </div>
-        <div class="auth-feat">
-          <div class="auth-feat-icon">📊</div>
-          <div class="auth-feat-text"><strong>Analytics Dashboard</strong>Confusion Matrix · Feature Importance</div>
-        </div>
+        <div class="auth-feat"><div class="auth-feat-icon">⚠️</div><div class="auth-feat-text"><strong>Churn Prediction</strong>ExtraTree Classifier · 90.46% Accuracy</div></div>
+        <div class="auth-feat"><div class="auth-feat-icon">🏦</div><div class="auth-feat-text"><strong>Loan Eligibility</strong>Random Forest · Real-time Scoring</div></div>
+        <div class="auth-feat"><div class="auth-feat-icon">📊</div><div class="auth-feat-text"><strong>Role-Based Dashboards</strong>Personalised for your function</div></div>
       </div>
     </div>
     <div class="auth-right">
@@ -457,14 +454,8 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
         <h2>Welcome back</h2>
         <p class="sub">// Sign in to your 3DSBank account</p>
         <div class="auth-error" id="login-error"></div>
-        <div class="form-field">
-          <label>Email Address</label>
-          <input type="email" id="login-email" placeholder="you@3dsbank.com"/>
-        </div>
-        <div class="form-field">
-          <label>Password</label>
-          <input type="password" id="login-pass" placeholder="••••••••"/>
-        </div>
+        <div class="form-field"><label>Email Address</label><input type="email" id="login-email" placeholder="you@3dsbank.com"/></div>
+        <div class="form-field"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••"/></div>
         <button class="btn-gold" onclick="doLogin()">Sign In →</button>
         <div class="auth-switch">Don't have an account? <a onclick="showPage('page-register')">Register here</a></div>
         <div class="auth-switch" style="margin-top:8px"><a onclick="showPage('page-welcome')">← Back to welcome</a></div>
@@ -473,9 +464,7 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     PAGE 3: REGISTER
-════════════════════════════════════ -->
+<!-- ════ PAGE 3: REGISTER ════ -->
 <div class="page" id="page-register">
   <div class="auth-page">
     <div class="auth-left">
@@ -484,16 +473,10 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
         <div class="auth-brand-name">3DS<span>Bank</span></div>
       </div>
       <h1>Join the<br><em>Future</em> of<br>Banking AI</h1>
-      <p>Create your account to access the full 3DSBank AI platform — churn prediction, loan analysis, and model analytics.</p>
+      <p>Create your account to access your role-tailored dashboard — churn prediction, loan analysis, and model analytics.</p>
       <div class="auth-features">
-        <div class="auth-feat">
-          <div class="auth-feat-icon">🔐</div>
-          <div class="auth-feat-text"><strong>Secure Access</strong>Your data is encrypted and protected</div>
-        </div>
-        <div class="auth-feat">
-          <div class="auth-feat-icon">⚡</div>
-          <div class="auth-feat-text"><strong>Instant Predictions</strong>Real-time ML inference engine</div>
-        </div>
+        <div class="auth-feat"><div class="auth-feat-icon">🔐</div><div class="auth-feat-text"><strong>Secure Access</strong>Your data is encrypted and protected</div></div>
+        <div class="auth-feat"><div class="auth-feat-icon">⚡</div><div class="auth-feat-text"><strong>Role-Based Views</strong>Personalised dashboards per function</div></div>
       </div>
     </div>
     <div class="auth-right">
@@ -501,14 +484,8 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
         <h2>Create account</h2>
         <p class="sub">// Start your 3DSBank AI journey</p>
         <div class="auth-error" id="reg-error"></div>
-        <div class="form-field">
-          <label>Full Name</label>
-          <input type="text" id="reg-name" placeholder="Arjun Sharma"/>
-        </div>
-        <div class="form-field">
-          <label>Email Address</label>
-          <input type="email" id="reg-email" placeholder="you@nexabank.com"/>
-        </div>
+        <div class="form-field"><label>Full Name</label><input type="text" id="reg-name" placeholder="Arjun Sharma"/></div>
+        <div class="form-field"><label>Email Address</label><input type="email" id="reg-email" placeholder="you@3dsbank.com"/></div>
         <div class="form-field">
           <label>Role</label>
           <select id="reg-role">
@@ -518,14 +495,8 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
             <option value="Officer">Loan Officer</option>
           </select>
         </div>
-        <div class="form-field">
-          <label>Password</label>
-          <input type="password" id="reg-pass" placeholder="min. 6 characters"/>
-        </div>
-        <div class="form-field">
-          <label>Confirm Password</label>
-          <input type="password" id="reg-pass2" placeholder="repeat password"/>
-        </div>
+        <div class="form-field"><label>Password</label><input type="password" id="reg-pass" placeholder="min. 6 characters"/></div>
+        <div class="form-field"><label>Confirm Password</label><input type="password" id="reg-pass2" placeholder="repeat password"/></div>
         <button class="btn-gold" onclick="doRegister()">Create Account →</button>
         <div class="auth-switch">Already have an account? <a onclick="showPage('page-login')">Sign in</a></div>
       </div>
@@ -533,17 +504,14 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     PAGE 4: MAIN APP
-════════════════════════════════════ -->
+<!-- ════ PAGE 4: MAIN APP ════ -->
 <div class="page" id="page-app">
   <div class="app-layout">
 
     <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sidebar-brand" onclick="showSection('dashboard')">
-        <div class="sb-logo">DS
-        </div>
+        <div class="sb-logo">DS</div>
         <div class="sb-name">3DS<span>Bank</span></div>
       </div>
       <div class="sidebar-user">
@@ -553,14 +521,8 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
           <div class="user-info-role" id="sb-role">Analyst</div>
         </div>
       </div>
-      <div class="sidebar-nav">
-        <div class="nav-section-label">Main</div>
-        <div class="nav-item active" onclick="showSection('dashboard')"><span class="ni">🏠</span>Dashboard</div>
-        <div class="nav-section-label">AI Tools</div>
-        <div class="nav-item" onclick="showSection('churn')"><span class="ni">⚠️</span>Churn Predictor</div>
-        <div class="nav-item" onclick="showSection('loan')"><span class="ni">🏦</span>Loan Eligibility</div>
-        <div class="nav-section-label">Info</div>
-        <div class="nav-item" onclick="showSection('about')"><span class="ni">ℹ️</span>About Project</div>
+      <div class="sidebar-nav" id="sidebar-nav">
+        <!-- Populated by JS based on role -->
       </div>
       <div class="sidebar-bottom">
         <button class="logout-btn" onclick="doLogout()">⬡ &nbsp;Sign Out</button>
@@ -573,164 +535,627 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
         <div class="topbar-title" id="topbar-title">Dashboard</div>
         <div class="topbar-right">
           <div class="topbar-badge"><span class="live-dot"></span>AI Models Active</div>
+          <div class="role-badge" id="topbar-role-badge">Analyst</div>
           <div style="font-size:12px;color:var(--muted);font-family:var(--mono)" id="topbar-user">—</div>
         </div>
       </div>
 
       <div class="content-area">
 
-        <!-- ── DASHBOARD ── -->
-        <div class="section-content active" id="sec-dashboard">
+        <!-- ══════════════════════════════════════
+             ANALYST DASHBOARD
+        ══════════════════════════════════════ -->
+        <div class="section-content" id="sec-dashboard-analyst">
           <div class="dash-welcome-banner">
-            <div class="welcome-tag-sm">🏦 3DSBank AI Platform</div>
+            <div class="role-banner-tag analyst">📊 Data Analyst Portal</div>
             <h2 id="dash-welcome">Welcome back!</h2>
-            <p>Your AI-powered banking intelligence hub. Run churn predictions, evaluate loan applications, and explore model insights.</p>
+            <p>Your ML model performance hub. Explore accuracy metrics, feature importance, model comparisons, and run predictions to validate your analysis.</p>
           </div>
-
           <div class="kpi-grid">
-            <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-val">10,000</div><div class="kpi-label">Churn Records</div><div class="kpi-delta">▲ Bank customer dataset</div></div>
-            <div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-val">90.46%</div><div class="kpi-label">Churn Accuracy</div><div class="kpi-delta">▲ ExtraTree Classifier</div></div>
-            <div class="kpi-card"><div class="kpi-icon">📋</div><div class="kpi-val">614</div><div class="kpi-label">Loan Applications</div><div class="kpi-delta">▲ Loan eligible dataset</div></div>
-            <div class="kpi-card"><div class="kpi-icon">🤖</div><div class="kpi-val">7</div><div class="kpi-label">ML Models</div><div class="kpi-delta">▲ Tested &amp; compared</div></div>
+            <div class="kpi-card"><div class="kpi-icon">🎯</div><div class="kpi-val">90.46%</div><div class="kpi-label">Churn Accuracy</div><div class="kpi-delta">▲ ExtraTree Classifier</div></div>
+            <div class="kpi-card"><div class="kpi-icon">📈</div><div class="kpi-val">97.5%</div><div class="kpi-label">Churn Recall</div><div class="kpi-delta">▲ Best performing metric</div></div>
+            <div class="kpi-card"><div class="kpi-icon">🌲</div><div class="kpi-val">66.67%</div><div class="kpi-label">Loan RF Accuracy</div><div class="kpi-delta blue">▲ Random Forest baseline</div></div>
+            <div class="kpi-card"><div class="kpi-icon">🧪</div><div class="kpi-val">7</div><div class="kpi-label">Models Tested</div><div class="kpi-delta gold">▲ Fully compared</div></div>
           </div>
-
-          <!-- CHOOSE A TOOL -->
-          <div style="margin-bottom:14px;">
-            <div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">Choose a Prediction Tool</div>
-            <div class="pred-selector-grid">
-
-              <!-- Churn Card -->
-              <div class="pred-selector-card churn-card" onclick="showSection('churn')">
-                <div class="psc-icon">⚠️</div>
-                <div class="psc-title">Churn Risk Predictor</div>
-                <div class="psc-subtitle">// ExtraTree Classifier · CHURN.pkl</div>
-                <div class="psc-desc">Predict whether a customer is likely to leave the bank based on their credit score, activity, balance, tenure, and demographics.</div>
-                <div class="psc-stats">
-                  <div class="psc-stat"><div class="psc-stat-val" style="color:var(--red)">90.46%</div><div class="psc-stat-lbl">Accuracy</div></div>
-                  <div class="psc-stat"><div class="psc-stat-val" style="color:var(--green)">97.5%</div><div class="psc-stat-lbl">Recall</div></div>
-                  <div class="psc-stat"><div class="psc-stat-val" style="color:var(--blue)">85.3%</div><div class="psc-stat-lbl">Precision</div></div>
-                </div>
-                <div class="psc-badge red" style="margin-top:14px;">⚡ Run Churn Prediction</div>
-                <div class="psc-arrow r">→</div>
-              </div>
-
-              <!-- Loan Card -->
-              <div class="pred-selector-card loan-card" onclick="showSection('loan')">
-                <div class="psc-icon">🏦</div>
-                <div class="psc-title">Loan Eligibility Checker</div>
-                <div class="psc-subtitle">// Random Forest Classifier · LOAN_final1.pkl</div>
-                <div class="psc-desc">Evaluate a loan applicant's eligibility based on income, loan amount, marital status, education, employment, and property area.</div>
-                <div class="psc-stats">
-                  <div class="psc-stat"><div class="psc-stat-val" style="color:var(--green)">66.67%</div><div class="psc-stat-lbl">Accuracy</div></div>
-                  <div class="psc-stat"><div class="psc-stat-val" style="color:var(--gold2)">90.1%</div><div class="psc-stat-lbl">Recall</div></div>
-                  <div class="psc-stat"><div class="psc-stat-val" style="color:var(--blue)">69.6%</div><div class="psc-stat-lbl">Precision</div></div>
-                </div>
-                <div class="psc-badge green" style="margin-top:14px;">⚡ Check Eligibility</div>
-                <div class="psc-arrow g">→</div>
-              </div>
-
+          <div class="two-col">
+            <div class="info-card">
+              <h3>📉 Model Performance — Churn</h3>
+              <div class="progress-wrap"><div class="progress-label"><span>ExtraTree Classifier</span><span>90.46%</span></div><div class="progress-track"><div class="progress-fill blue" style="width:90.46%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Voting Classifier</span><span>85.2%</span></div><div class="progress-track"><div class="progress-fill gold" style="width:85.2%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Stacking Classifier</span><span>83.8%</span></div><div class="progress-track"><div class="progress-fill green" style="width:83.8%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Random Forest</span><span>82.1%</span></div><div class="progress-track"><div class="progress-fill purple" style="width:82.1%"></div></div></div>
+            </div>
+            <div class="info-card">
+              <h3>🏦 Model Performance — Loan</h3>
+              <div class="progress-wrap"><div class="progress-label"><span>Random Forest (Final)</span><span>66.67%</span></div><div class="progress-track"><div class="progress-fill green" style="width:66.67%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Recall Score</span><span>90.1%</span></div><div class="progress-track"><div class="progress-fill blue" style="width:90.1%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Precision Score</span><span>69.6%</span></div><div class="progress-track"><div class="progress-fill gold" style="width:69.6%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>F1 Score</span><span>78.3%</span></div><div class="progress-track"><div class="progress-fill purple" style="width:78.3%"></div></div></div>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>🔑 Key Churn Features</h3>
+              <ul>
+                <li>🔴 Age &gt; 45 — <span style="color:var(--red)">+28 risk points</span></li>
+                <li>🔴 Inactive Member — <span style="color:var(--red)">+26 risk points</span></li>
+                <li>🔴 Products ≥ 3 — <span style="color:var(--red)">+22 risk points</span></li>
+                <li>🟡 Credit Score &lt; 500 — <span style="color:var(--gold2)">+14 risk points</span></li>
+                <li>🟡 Zero Balance — <span style="color:var(--gold2)">+10 risk points</span></li>
+                <li>🟢 Short Tenure ≤ 1yr — <span style="color:var(--muted)">+8 risk points</span></li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <h3>📁 Dataset Overview</h3>
+              <ul>
+                <li>👥 Churn Records — <span style="color:var(--cream)">10,000 customers</span></li>
+                <li>📋 Loan Records — <span style="color:var(--cream)">614 applications</span></li>
+                <li>📌 Churn Rate — <span style="color:var(--red)">~20.3% (positive class)</span></li>
+                <li>✅ Loan Approval — <span style="color:var(--green)">~68.7% approved</span></li>
+                <li>⚙️ Balancing — <span style="color:var(--cream)">SMOTE / ROS applied</span></li>
+                <li>🐍 Stack — <span style="color:var(--cream)">Python · sklearn · pandas</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="two-col" style="margin-top:4px">
+            <div class="info-card" style="cursor:pointer" onclick="showSection('churn')">
+              <h3>⚠️ Run Churn Prediction</h3>
+              <p style="font-size:12px;color:var(--muted);font-family:var(--mono);line-height:1.6">Test the ExtraTree Classifier on a new customer profile and validate model output with confidence scoring.</p>
+              <div style="margin-top:12px"><span class="psc-badge red">→ Open Churn Tool</span></div>
+            </div>
+            <div class="info-card" style="cursor:pointer" onclick="showSection('loan')">
+              <h3>🏦 Run Loan Prediction</h3>
+              <p style="font-size:12px;color:var(--muted);font-family:var(--mono);line-height:1.6">Test the Random Forest loan classifier on an applicant profile and review eligibility scoring breakdown.</p>
+              <div style="margin-top:12px"><span class="psc-badge green">→ Open Loan Tool</span></div>
             </div>
           </div>
         </div>
 
-        <!-- ── CHURN PREDICTION ── -->
+        <!-- ══════════════════════════════════════
+             MANAGER DASHBOARD
+        ══════════════════════════════════════ -->
+        <div class="section-content" id="sec-dashboard-manager">
+          <div class="dash-welcome-banner">
+            <div class="role-banner-tag manager">🏢 Branch Manager Portal</div>
+            <h2 id="dash-welcome-manager">Welcome back!</h2>
+            <p>Branch performance overview. Monitor customer retention risk, team activity, loan portfolio health, and key business KPIs at a glance.</p>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-val">2,034</div><div class="kpi-label">Active Customers</div><div class="kpi-delta">▲ +4.2% this month</div></div>
+            <div class="kpi-card"><div class="kpi-icon">⚠️</div><div class="kpi-val">203</div><div class="kpi-label">At-Risk Customers</div><div class="kpi-delta red">▲ 20.3% churn rate</div></div>
+            <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-val">₹4.2Cr</div><div class="kpi-label">Loan Portfolio</div><div class="kpi-delta">▲ 68.7% approval rate</div></div>
+            <div class="kpi-card"><div class="kpi-icon">📊</div><div class="kpi-val">87.4%</div><div class="kpi-label">Retention Rate</div><div class="kpi-delta">▲ Up from 84.1%</div></div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>🚨 Churn Risk Alerts</h3>
+              <div class="alert-list">
+                <div class="alert-item danger"><div class="alert-dot danger"></div><div class="alert-text"><strong>Priya Mehta — A/C #4821</strong>High churn risk · Age 52 · Inactive · 3 products. Recommend: retention call.</div></div>
+                <div class="alert-item danger"><div class="alert-dot danger"></div><div class="alert-text"><strong>Rajan Kumar — A/C #3109</strong>High churn risk · Zero balance · Short tenure. Recommend: loyalty offer.</div></div>
+                <div class="alert-item warning"><div class="alert-dot warning"></div><div class="alert-text"><strong>Anjali Singh — A/C #7743</strong>Moderate risk · Age 47 · Credit 520. Monitor closely.</div></div>
+                <div class="alert-item success"><div class="alert-dot success"></div><div class="alert-text"><strong>12 customers resolved this week</strong>Retention outreach converted 12 high-risk profiles.</div></div>
+              </div>
+            </div>
+            <div class="info-card">
+              <h3>📋 Loan Portfolio Summary</h3>
+              <div class="alert-list">
+                <div class="alert-item success"><div class="alert-dot success"></div><div class="alert-text"><strong>Pending Review — 14 applications</strong>Awaiting loan officer sign-off. Avg. amount: ₹1.8L</div></div>
+                <div class="alert-item warning"><div class="alert-dot warning"></div><div class="alert-text"><strong>Borderline Cases — 6 applications</strong>Eligibility score 48–54. Manual review recommended.</div></div>
+                <div class="alert-item danger"><div class="alert-dot danger"></div><div class="alert-text"><strong>Rejected this month — 32 applications</strong>Primary reason: High loan-to-income ratio</div></div>
+                <div class="alert-item success"><div class="alert-dot success"></div><div class="alert-text"><strong>Approved this month — 89 applications</strong>₹1.62 Cr total disbursed</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>📈 Branch KPIs — This Month</h3>
+              <div class="progress-wrap"><div class="progress-label"><span>Customer Retention</span><span>87.4%</span></div><div class="progress-track"><div class="progress-fill green" style="width:87.4%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Loan Approval Rate</span><span>68.7%</span></div><div class="progress-track"><div class="progress-fill blue" style="width:68.7%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>NPS Score</span><span>72%</span></div><div class="progress-track"><div class="progress-fill gold" style="width:72%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>AI Tool Adoption</span><span>91%</span></div><div class="progress-track"><div class="progress-fill purple" style="width:91%"></div></div></div>
+            </div>
+            <div class="info-card">
+              <h3>🤖 Quick Tools</h3>
+              <div class="alert-list">
+                <div class="alert-item" style="cursor:pointer" onclick="showSection('churn')"><div class="alert-dot warning"></div><div class="alert-text"><strong>Run Churn Check on Customer</strong>Enter customer details for instant AI risk assessment →</div></div>
+                <div class="alert-item" style="cursor:pointer" onclick="showSection('loan')"><div class="alert-dot success"></div><div class="alert-text"><strong>Check Loan Eligibility</strong>Evaluate a pending loan application with AI →</div></div>
+                <div class="alert-item" style="cursor:pointer" onclick="showSection('about')"><div class="alert-dot" style="background:var(--blue)"></div><div class="alert-text"><strong>View Platform Overview</strong>Models, accuracy, and tech stack →</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             ADMIN DASHBOARD
+        ══════════════════════════════════════ -->
+        <div class="section-content" id="sec-dashboard-admin">
+          <div class="dash-welcome-banner">
+            <div class="role-banner-tag admin">🛡️ Administrator Portal</div>
+            <h2 id="dash-welcome-admin">Welcome back!</h2>
+            <p>Full platform control. Manage users, monitor system health, review model deployment status, and oversee all role activities across the bank.</p>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-icon">👤</div><div class="kpi-val" id="admin-user-count">4</div><div class="kpi-label">Registered Users</div><div class="kpi-delta">▲ All roles active</div></div>
+            <div class="kpi-card"><div class="kpi-icon">🤖</div><div class="kpi-val">7</div><div class="kpi-label">ML Models</div><div class="kpi-delta">▲ All deployed</div></div>
+            <div class="kpi-card"><div class="kpi-icon">⚡</div><div class="kpi-val">2,847</div><div class="kpi-label">Predictions Run</div><div class="kpi-delta">▲ This session</div></div>
+            <div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-val">99.9%</div><div class="kpi-label">System Uptime</div><div class="kpi-delta">▲ All services nominal</div></div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>👥 User Registry</h3>
+              <table class="data-table">
+                <thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead>
+                <tbody id="admin-user-table">
+                  <tr><td colspan="3" style="color:var(--muted);text-align:center;padding:20px">No users registered yet</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>🤖 Model Deployment Status</h3>
+              <table class="data-table">
+                <thead><tr><th>Model</th><th>Task</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>ExtraTree</td><td>Churn</td><td><span class="badge-sm green">● Live</span></td></tr>
+                  <tr><td>RandomForest</td><td>Loan</td><td><span class="badge-sm green">● Live</span></td></tr>
+                  <tr><td>VotingClassifier</td><td>Churn</td><td><span class="badge-sm blue">● Standby</span></td></tr>
+                  <tr><td>StackingClassifier</td><td>Loan</td><td><span class="badge-sm blue">● Standby</span></td></tr>
+                  <tr><td>Neural Network</td><td>Chatbot</td><td><span class="badge-sm gold">● Dev</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>🔐 System Health</h3>
+              <div class="progress-wrap"><div class="progress-label"><span>localStorage (User Store)</span><span>OK</span></div><div class="progress-track"><div class="progress-fill green" style="width:100%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Churn Model Engine</span><span>Active</span></div><div class="progress-track"><div class="progress-fill blue" style="width:100%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Loan Model Engine</span><span>Active</span></div><div class="progress-track"><div class="progress-fill green" style="width:100%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Session Security</span><span>Nominal</span></div><div class="progress-track"><div class="progress-fill gold" style="width:100%"></div></div></div>
+            </div>
+            <div class="info-card">
+              <h3>📋 Role Access Matrix</h3>
+              <table class="data-table">
+                <thead><tr><th>Role</th><th>Churn</th><th>Loan</th><th>Admin</th></tr></thead>
+                <tbody>
+                  <tr><td>Analyst</td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm red">✗</span></td></tr>
+                  <tr><td>Manager</td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm red">✗</span></td></tr>
+                  <tr><td>Admin</td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm green">✓</span></td></tr>
+                  <tr><td>Officer</td><td><span class="badge-sm red">✗</span></td><td><span class="badge-sm green">✓</span></td><td><span class="badge-sm red">✗</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             LOAN OFFICER DASHBOARD
+        ══════════════════════════════════════ -->
+        <div class="section-content" id="sec-dashboard-officer">
+          <div class="dash-welcome-banner">
+            <div class="role-banner-tag officer">📝 Loan Officer Portal</div>
+            <h2 id="dash-welcome-officer">Welcome back!</h2>
+            <p>Your loan processing workspace. Review pending applications, run AI eligibility checks, manage approvals, and track your portfolio performance.</p>
+          </div>
+          <div class="kpi-grid-3">
+            <div class="kpi-card"><div class="kpi-icon">📋</div><div class="kpi-val">14</div><div class="kpi-label">Pending Applications</div><div class="kpi-delta gold">▲ Awaiting review</div></div>
+            <div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-val">89</div><div class="kpi-label">Approved This Month</div><div class="kpi-delta">▲ ₹1.62 Cr disbursed</div></div>
+            <div class="kpi-card"><div class="kpi-icon">❌</div><div class="kpi-val">32</div><div class="kpi-label">Rejected This Month</div><div class="kpi-delta red">▲ High loan ratio</div></div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>📋 Pending Applications Queue</h3>
+              <table class="data-table">
+                <thead><tr><th>Applicant</th><th>Amount</th><th>AI Score</th><th>Priority</th></tr></thead>
+                <tbody>
+                  <tr><td>R. Sharma</td><td>₹1.2L</td><td><span class="badge-sm green">72%</span></td><td><span class="badge-sm blue">Normal</span></td></tr>
+                  <tr><td>K. Nair</td><td>₹2.5L</td><td><span class="badge-sm gold">54%</span></td><td><span class="badge-sm gold">Review</span></td></tr>
+                  <tr><td>P. Iyer</td><td>₹80K</td><td><span class="badge-sm green">81%</span></td><td><span class="badge-sm blue">Normal</span></td></tr>
+                  <tr><td>M. Reddy</td><td>₹3.1L</td><td><span class="badge-sm red">41%</span></td><td><span class="badge-sm red">Urgent</span></td></tr>
+                  <tr><td>A. Patel</td><td>₹1.5L</td><td><span class="badge-sm green">68%</span></td><td><span class="badge-sm blue">Normal</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>📊 Eligibility Distribution</h3>
+              <div class="progress-wrap" style="margin-top:8px"><div class="progress-label"><span>Score 70–100 (Approve)</span><span>42%</span></div><div class="progress-track"><div class="progress-fill green" style="width:42%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Score 55–69 (Approve)</span><span>26%</span></div><div class="progress-track"><div class="progress-fill blue" style="width:26%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Score 45–54 (Review)</span><span>16%</span></div><div class="progress-track"><div class="progress-fill gold" style="width:16%"></div></div></div>
+              <div class="progress-wrap"><div class="progress-label"><span>Score &lt;45 (Reject)</span><span>16%</span></div><div class="progress-track"><div class="progress-fill red" style="width:16%"></div></div></div>
+              <div style="margin-top:16px;font-size:11px;color:var(--muted);font-family:var(--mono)">Most rejections caused by high debt-to-income ratio and low income base.</div>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="info-card">
+              <h3>💡 Loan Officer Checklist</h3>
+              <ul>
+                <li>✅ Verify applicant identity documents</li>
+                <li>✅ Run AI eligibility check first</li>
+                <li>⏳ Review borderline scores (45–54) manually</li>
+                <li>⏳ Cross-check self-employed income statements</li>
+                <li>⏳ Confirm property area classification</li>
+                <li>❌ Follow up on 4 pending co-applicant docs</li>
+              </ul>
+            </div>
+            <div class="info-card" style="cursor:pointer" onclick="showSection('loan')">
+              <h3>⚡ Run Loan Eligibility Check</h3>
+              <p style="font-size:12px;color:var(--muted);font-family:var(--mono);line-height:1.7;margin-bottom:14px">Enter an applicant's details into the AI model to instantly compute their loan eligibility score, debt ratio, and approval recommendation.</p>
+              <div class="alert-item success" style="cursor:pointer"><div class="alert-dot success"></div><div class="alert-text"><strong>Open Loan Eligibility Tool →</strong>Random Forest Classifier · LOAN_final1.pkl · 90.1% recall</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             CHURN PREDICTOR (All Roles except Officer)
+        ══════════════════════════════════════ -->
+        <!-- ══════════════════════════════════════
+             CHURN RISK PREDICTOR
+        ══════════════════════════════════════ -->
         <div class="section-content" id="sec-churn">
-          <button class="back-btn" onclick="showSection('dashboard')">← Back to Dashboard</button>
+          <button class="back-btn" onclick="goBackToDashboard()">← Back to Dashboard</button>
           <div class="sec-head">
-            <div class="sec-tag">ExtraTree Classifier · 90.46% Accuracy</div>
+            <div class="sec-tag">ExtraTree Classifier · 90.46% Accuracy · CHURN.pkl</div>
             <div class="sec-title">Churn Risk Predictor</div>
-            <div class="sec-desc">Enter customer details below to get an instant AI-powered churn risk assessment.</div>
+            <div class="sec-desc">Review the risk criteria and retention strategies, then run the AI assessment on the customer profile.</div>
           </div>
-          <div class="pred-wrap">
-            <div class="pred-card">
-              <div class="pred-header">
-                <div class="pred-header-icon red">⚠️</div>
-                <div>
-                  <div class="pred-header-title">Customer Churn Analysis</div>
-                  <div class="pred-header-sub">Trained on 10,000 bank customer records · CHURN.pkl</div>
+
+          <div class="loan-page-wrap">
+
+            <!-- ── LEFT PANEL: Churn Criteria + Tips ── -->
+            <div class="loan-criteria-panel">
+
+              <!-- High Risk Triggers -->
+              <div class="criteria-card">
+                <div class="criteria-card-header">
+                  <div class="criteria-card-header-icon red">🔴</div>
+                  <div>
+                    <div class="criteria-card-header-title">High Risk Triggers</div>
+                    <div class="criteria-card-header-sub">Factors that increase churn probability</div>
+                  </div>
+                </div>
+                <div class="criteria-body">
+                  <div class="criteria-row"><span class="criteria-key">Age &gt; 45</span><span class="criteria-val bad">+28 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Inactive Member</span><span class="criteria-val bad">+26 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Products ≥ 3</span><span class="criteria-val bad">+22 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Credit Score &lt; 500</span><span class="criteria-val bad">+14 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Zero Balance</span><span class="criteria-val bad">+10 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Tenure ≤ 1 year</span><span class="criteria-val bad">+8 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Credit Score 500–599</span><span class="criteria-val warn">+7 risk pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Age 35–45</span><span class="criteria-val warn">+12 risk pts</span></div>
                 </div>
               </div>
-              <div class="pred-body">
-                <div class="frow">
-                  <div><label class="field-lbl">Credit Score</label><input class="fi" type="number" id="c-credit" value="619" min="300" max="850"/></div>
-                  <div><label class="field-lbl">Age</label><input class="fi" type="number" id="c-age" value="42"/></div>
+
+              <!-- Low Risk Profile -->
+              <div class="criteria-card">
+                <div class="criteria-card-header">
+                  <div class="criteria-card-header-icon green">🟢</div>
+                  <div>
+                    <div class="criteria-card-header-title">Low Risk Profile</div>
+                    <div class="criteria-card-header-sub">Characteristics of a stable customer</div>
+                  </div>
                 </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Gender</label><select class="fs" id="c-gender"><option value="0">Female</option><option value="1">Male</option></select></div>
-                  <div><label class="field-lbl">Tenure (years)</label><input class="fi" type="number" id="c-tenure" value="2"/></div>
+                <div class="criteria-body">
+                  <div class="criteria-row"><span class="criteria-key">Age ≤ 35</span><span class="criteria-val good">Minimal age risk</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Active Member</span><span class="criteria-val good">No inactivity risk</span></div>
+                  <div class="criteria-row"><span class="criteria-key">1–2 Products</span><span class="criteria-val good">Healthy engagement</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Credit Score ≥ 600</span><span class="criteria-val good">Stable financial profile</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Positive Balance</span><span class="criteria-val good">Invested in bank</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Tenure &gt; 1 year</span><span class="criteria-val good">Established relationship</span></div>
                 </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Account Balance (₹)</label><input class="fi" type="number" id="c-balance" value="0"/></div>
-                  <div><label class="field-lbl">No. of Products</label><select class="fs" id="c-products"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>
-                </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Has Credit Card</label><select class="fs" id="c-hascard"><option value="1">Yes</option><option value="0">No</option></select></div>
-                  <div><label class="field-lbl">Active Member</label><select class="fs" id="c-active"><option value="1">Yes</option><option value="0">No</option></select></div>
-                </div>
-                <div class="frow single"><label class="field-lbl">Estimated Salary (₹)</label><input class="fi" type="number" id="c-salary" value="101348"/></div>
-                <button class="run-btn r" onclick="predictChurn()">⚡ Predict Churn Risk</button>
-                <div class="result-box" id="churn-result"></div>
               </div>
-            </div>
-          </div>
+
+              <!-- Risk Score Guide -->
+              <div class="criteria-card">
+                <div class="criteria-card-header">
+                  <div class="criteria-card-header-icon gold">🎯</div>
+                  <div>
+                    <div class="criteria-card-header-title">Risk Score Guide</div>
+                    <div class="criteria-card-header-sub">Churn decision threshold: 38 pts</div>
+                  </div>
+                </div>
+                <div class="score-legend">
+                  <div class="score-row"><div class="score-swatch" style="background:var(--red)"></div><span style="color:var(--red);font-weight:600">≥ 38 pts</span><span style="color:var(--muted)">HIGH CHURN RISK ⚠️</span></div>
+                  <div class="score-row"><div class="score-swatch" style="background:var(--gold2)"></div><span style="color:var(--gold2);font-weight:600">25–37 pts</span><span style="color:var(--muted)">Moderate — monitor</span></div>
+                  <div class="score-row"><div class="score-swatch" style="background:#7ecb9a"></div><span style="color:#7ecb9a;font-weight:600">10–24 pts</span><span style="color:var(--muted)">Low — stable</span></div>
+                  <div class="score-row"><div class="score-swatch" style="background:var(--green)"></div><span style="color:var(--green);font-weight:600">0–9 pts</span><span style="color:var(--muted)">Very low — loyal ✓</span></div>
+                </div>
+              </div>
+
+              <!-- Retention Strategies -->
+              <div class="approach-card">
+                <div class="approach-header">
+                  <div class="criteria-card-header-icon blue" style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(77,157,224,.15);">🛡️</div>
+                  <div>
+                    <div class="criteria-card-header-title">Retention Action Plan</div>
+                    <div class="criteria-card-header-sub">Steps to take for high-risk customers</div>
+                  </div>
+                </div>
+                <div class="approach-steps">
+                  <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                      <div class="step-title">Identify & Flag</div>
+                      <div class="step-desc">Run AI check on customer profile. Any score ≥ 38 is flagged as high-risk and requires immediate attention.</div>
+                      <span class="step-tip">⚠️ Score ≥ 38 → escalate to retention team</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                      <div class="step-title">Personal Outreach</div>
+                      <div class="step-desc">Assign a relationship manager to call the customer within 48 hours. Address inactivity or dissatisfaction directly.</div>
+                      <span class="step-tip">📞 Call within 48 hrs of flag</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                      <div class="step-title">Offer Loyalty Benefits</div>
+                      <div class="step-desc">Provide a tailored retention offer — cashback, fee waiver, higher FD rates, or exclusive credit card upgrade based on profile.</div>
+                      <span class="step-tip">🎁 Match offer to customer segment</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                      <div class="step-title">Re-engage Inactive Members</div>
+                      <div class="step-desc">For inactivity triggers, schedule a digital re-engagement campaign — mobile app nudges, personalised offers, or branch visit incentives.</div>
+                      <span class="step-tip">📱 App push · email · SMS</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                      <div class="step-title">Monitor & Re-assess</div>
+                      <div class="step-desc">Re-run the churn check after 30 days. If risk drops below 38, move to standard monitoring queue.</div>
+                      <span class="step-tip">📋 Log outcome in retention tracker</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /loan-criteria-panel -->
+
+            <!-- ── RIGHT PANEL: Prediction Form ── -->
+            <div class="loan-form-col">
+              <div class="pred-card">
+                <div class="pred-header">
+                  <div class="pred-header-icon red">⚠️</div>
+                  <div>
+                    <div class="pred-header-title">Customer Churn Analysis</div>
+                    <div class="pred-header-sub">Trained on 10,000 bank customer records · CHURN.pkl · ExtraTree Classifier</div>
+                  </div>
+                </div>
+                <div class="pred-body">
+                  <div class="frow">
+                    <div><label class="field-lbl">Credit Score</label><input class="fi" type="number" id="c-credit" value="619" min="300" max="850" oninput="updateChurnMeter()"/></div>
+                    <div><label class="field-lbl">Age</label><input class="fi" type="number" id="c-age" value="42" oninput="updateChurnMeter()"/></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Gender</label><select class="fs" id="c-gender" onchange="updateChurnMeter()"><option value="0">Female</option><option value="1">Male</option></select></div>
+                    <div><label class="field-lbl">Tenure (years)</label><input class="fi" type="number" id="c-tenure" value="2" oninput="updateChurnMeter()"/></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Account Balance (₹)</label><input class="fi" type="number" id="c-balance" value="0" oninput="updateChurnMeter()"/></div>
+                    <div><label class="field-lbl">No. of Products</label><select class="fs" id="c-products" onchange="updateChurnMeter()"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Has Credit Card</label><select class="fs" id="c-hascard" onchange="updateChurnMeter()"><option value="1">Yes</option><option value="0">No</option></select></div>
+                    <div><label class="field-lbl">Active Member</label><select class="fs" id="c-active" onchange="updateChurnMeter()"><option value="1">Yes</option><option value="0">No</option></select></div>
+                  </div>
+                  <div class="frow single"><label class="field-lbl">Estimated Salary (₹)</label><input class="fi" type="number" id="c-salary" value="101348" oninput="updateChurnMeter()"/></div>
+
+                  <!-- Live Risk Meter -->
+                  <div id="churn-live-meter" style="margin-bottom:14px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--r8);">
+                    <div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Live Risk Meter</div>
+                    <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+                      <div id="churn-live-score" style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--green);min-width:60px;">0 pts</div>
+                      <div>
+                        <div id="churn-live-label" style="font-size:12px;font-weight:600;font-family:var(--mono);color:var(--green)">LOW RISK — Stable Customer</div>
+                        <div id="churn-live-sub" style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px">Threshold: 38 pts for high churn risk</div>
+                      </div>
+                    </div>
+                    <div style="height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;">
+                      <div id="churn-live-bar" style="height:100%;width:0%;border-radius:4px;transition:width .6s ease,background .4s ease;background:var(--green);"></div>
+                    </div>
+                    <div id="churn-live-tags" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;"></div>
+                  </div>
+
+                  <button class="run-btn r" onclick="predictChurn()">⚡ Predict Churn Risk</button>
+                  <div class="result-box" id="churn-result"></div>
+                </div>
+              </div>
+            </div><!-- /loan-form-col -->
+
+          </div><!-- /loan-page-wrap -->
         </div>
 
-        <!-- ── LOAN ELIGIBILITY ── -->
+        <!-- ══════════════════════════════════════
+             LOAN ELIGIBILITY (All Roles)
+        ══════════════════════════════════════ -->
         <div class="section-content" id="sec-loan">
-          <button class="back-btn" onclick="showSection('dashboard')">← Back to Dashboard</button>
+          <button class="back-btn" onclick="goBackToDashboard()">← Back to Dashboard</button>
           <div class="sec-head">
             <div class="sec-tag">Random Forest Classifier · LOAN_final1.pkl</div>
             <div class="sec-title">Loan Eligibility Checker</div>
-            <div class="sec-desc">Enter applicant details to check loan eligibility using the trained Random Forest model.</div>
+            <div class="sec-desc">Review the eligibility criteria and follow the step-by-step approach before running the AI assessment.</div>
           </div>
-          <div class="pred-wrap">
-            <div class="pred-card">
-              <div class="pred-header">
-                <div class="pred-header-icon green">🏦</div>
-                <div>
-                  <div class="pred-header-title">Loan Application Assessment</div>
-                  <div class="pred-header-sub">Trained on 614 loan applications · Random Forest · 100 estimators</div>
+
+          <div class="loan-page-wrap">
+
+            <!-- ── LEFT PANEL: Criteria + Steps ── -->
+            <div class="loan-criteria-panel">
+
+              <!-- Eligibility Criteria -->
+              <div class="criteria-card">
+                <div class="criteria-card-header">
+                  <div class="criteria-card-header-icon green">✅</div>
+                  <div>
+                    <div class="criteria-card-header-title">Approval Criteria</div>
+                    <div class="criteria-card-header-sub">Factors that boost eligibility</div>
+                  </div>
+                </div>
+                <div class="criteria-body">
+                  <div class="criteria-row"><span class="criteria-key">Debt / Income Ratio</span><span class="criteria-val good">&lt; 3× income</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Marital Status</span><span class="criteria-val good">Married +10pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Education</span><span class="criteria-val good">Graduate +10pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Property Area</span><span class="criteria-val good">Semiurban +10pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Loan Term</span><span class="criteria-val good">≥ 360 days +5pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Total Income</span><span class="criteria-val good">&gt; ₹8,000 +8pts</span></div>
                 </div>
               </div>
-              <div class="pred-body">
-                <div class="frow">
-                  <div><label class="field-lbl">Gender</label><select class="fs" id="l-gender"><option value="1">Male</option><option value="0">Female</option></select></div>
-                  <div><label class="field-lbl">Married</label><select class="fs" id="l-married"><option value="1">Yes</option><option value="0">No</option></select></div>
+
+              <!-- Risk Factors -->
+              <div class="criteria-card">
+                <div class="criteria-card-header">
+                  <div class="criteria-card-header-icon red">⚠️</div>
+                  <div>
+                    <div class="criteria-card-header-title">Risk Factors</div>
+                    <div class="criteria-card-header-sub">Factors that reduce eligibility</div>
+                  </div>
                 </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Dependents</label><select class="fs" id="l-dep"><option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3+</option></select></div>
-                  <div><label class="field-lbl">Education</label><select class="fs" id="l-edu"><option value="0">Graduate</option><option value="1">Not Graduate</option></select></div>
+                <div class="criteria-body">
+                  <div class="criteria-row"><span class="criteria-key">Debt / Income Ratio</span><span class="criteria-val bad">&gt; 8× income −18pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Dependents</span><span class="criteria-val bad">3 or more −10pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Self Employed</span><span class="criteria-val bad">Yes −5pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Property Area</span><span class="criteria-val warn">Rural 0 pts</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Not Graduate</span><span class="criteria-val warn">0 pts (no bonus)</span></div>
+                  <div class="criteria-row"><span class="criteria-key">Unmarried</span><span class="criteria-val warn">0 pts (no bonus)</span></div>
                 </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Self Employed</label><select class="fs" id="l-self"><option value="0">No</option><option value="1">Yes</option></select></div>
-                  <div><label class="field-lbl">Property Area</label><select class="fs" id="l-area"><option value="2">Urban</option><option value="1">Semiurban</option><option value="0">Rural</option></select></div>
-                </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Applicant Income (₹)</label><input class="fi" type="number" id="l-income" value="5849"/></div>
-                  <div><label class="field-lbl">Co-applicant Income (₹)</label><input class="fi" type="number" id="l-coincome" value="0"/></div>
-                </div>
-                <div class="frow">
-                  <div><label class="field-lbl">Loan Amount (₹ thousands)</label><input class="fi" type="number" id="l-amount" value="120"/></div>
-                  <div><label class="field-lbl">Loan Term (days)</label><input class="fi" type="number" id="l-term" value="360"/></div>
-                </div>
-                <button class="run-btn g" onclick="predictLoan()">⚡ Check Eligibility</button>
-                <div class="result-box" id="loan-result"></div>
               </div>
-            </div>
-          </div>
+
+              <!-- Score Guide -->
+              <div class="criteria-card">
+                <div class="criteria-card-header">
+                  <div class="criteria-card-header-icon gold">🎯</div>
+                  <div>
+                    <div class="criteria-card-header-title">Score Guide</div>
+                    <div class="criteria-card-header-sub">Eligibility bands (base: 50 pts)</div>
+                  </div>
+                </div>
+                <div class="score-legend">
+                  <div class="score-row"><div class="score-swatch" style="background:var(--green)"></div><span style="color:var(--green);font-weight:600">70–100</span><span style="color:var(--muted)">Strong Approval ✓</span></div>
+                  <div class="score-row"><div class="score-swatch" style="background:#7ecb9a"></div><span style="color:#7ecb9a;font-weight:600">55–69</span><span style="color:var(--muted)">Approved ✓</span></div>
+                  <div class="score-row"><div class="score-swatch" style="background:var(--gold2)"></div><span style="color:var(--gold2);font-weight:600">45–54</span><span style="color:var(--muted)">Manual Review ⚠️</span></div>
+                  <div class="score-row"><div class="score-swatch" style="background:var(--red)"></div><span style="color:var(--red);font-weight:600">&lt; 45</span><span style="color:var(--muted)">Rejected ✗</span></div>
+                </div>
+              </div>
+
+              <!-- Step-by-Step Approach -->
+              <div class="approach-card">
+                <div class="approach-header">
+                  <div class="criteria-card-header-icon blue" style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(77,157,224,.15);">🗺️</div>
+                  <div>
+                    <div class="criteria-card-header-title">How to Apply — 5 Steps</div>
+                    <div class="criteria-card-header-sub">Follow this process for best results</div>
+                  </div>
+                </div>
+                <div class="approach-steps">
+                  <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                      <div class="step-title">Gather Applicant Documents</div>
+                      <div class="step-desc">Collect income proof, ID, property docs, and employment status before starting.</div>
+                      <span class="step-tip">📎 Income statement · ID proof · Property docs</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                      <div class="step-title">Check Debt-to-Income Ratio</div>
+                      <div class="step-desc">Divide the loan amount by total monthly income. Keep ratio below 3× for strong approval odds.</div>
+                      <span class="step-tip">📐 Loan ÷ (Applicant + Co-applicant income)</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                      <div class="step-title">Fill In the AI Assessment Form</div>
+                      <div class="step-desc">Enter all details in the form — income, loan amount, education, property area, and dependents.</div>
+                      <span class="step-tip">⚡ Use accurate values for reliable scoring</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                      <div class="step-title">Run the Eligibility Check</div>
+                      <div class="step-desc">Click "Check Eligibility" to get an instant AI-powered score with breakdown and reasoning.</div>
+                      <span class="step-tip">🤖 Random Forest · 614 trained records</span>
+                    </div>
+                  </div>
+                  <div class="step-item">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                      <div class="step-title">Review & Decide</div>
+                      <div class="step-desc">Score ≥ 55 → Approve. Score 45–54 → Manual review. Score &lt; 45 → Advise applicant to reduce loan or add co-applicant income.</div>
+                      <span class="step-tip">📋 Document decision with score for audit trail</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /loan-criteria-panel -->
+
+            <!-- ── RIGHT PANEL: Prediction Form ── -->
+            <div class="loan-form-col">
+              <div class="pred-card">
+                <div class="pred-header">
+                  <div class="pred-header-icon green">🏦</div>
+                  <div>
+                    <div class="pred-header-title">Loan Application Assessment</div>
+                    <div class="pred-header-sub">Trained on 614 loan applications · Random Forest · 100 estimators</div>
+                  </div>
+                </div>
+                <div class="pred-body">
+                  <div class="frow">
+                    <div><label class="field-lbl">Gender</label><select class="fs" id="l-gender"><option value="1">Male</option><option value="0">Female</option></select></div>
+                    <div><label class="field-lbl">Married</label><select class="fs" id="l-married"><option value="1">Yes</option><option value="0">No</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Dependents</label><select class="fs" id="l-dep"><option value="0">None</option><option value="1">1</option><option value="2">2</option><option value="3">3+</option></select></div>
+                    <div><label class="field-lbl">Education</label><select class="fs" id="l-edu"><option value="0">Graduate</option><option value="1">Not Graduate</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Self Employed</label><select class="fs" id="l-self"><option value="0">No</option><option value="1">Yes</option></select></div>
+                    <div><label class="field-lbl">Property Area</label><select class="fs" id="l-area"><option value="2">Urban</option><option value="1">Semiurban</option><option value="0">Rural</option></select></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Applicant Income (₹)</label><input class="fi" type="number" id="l-income" value="5849"/></div>
+                    <div><label class="field-lbl">Co-applicant Income (₹)</label><input class="fi" type="number" id="l-coincome" value="0"/></div>
+                  </div>
+                  <div class="frow">
+                    <div><label class="field-lbl">Loan Amount (₹ thousands)</label><input class="fi" type="number" id="l-amount" value="120"/></div>
+                    <div><label class="field-lbl">Loan Term (days)</label><input class="fi" type="number" id="l-term" value="360"/></div>
+                  </div>
+
+                  <!-- Live ratio indicator -->
+                  <div style="margin-bottom:14px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--r8);">
+                    <div style="font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Live Debt-to-Income Ratio</div>
+                    <div id="ratio-display" style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--green)">—</div>
+                    <div id="ratio-label" style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:3px">Enter income and loan amount above</div>
+                  </div>
+
+                  <button class="run-btn g" onclick="predictLoan()">⚡ Check Eligibility</button>
+                  <div class="result-box" id="loan-result"></div>
+                </div>
+              </div>
+            </div><!-- /loan-form-col -->
+
+          </div><!-- /loan-page-wrap -->
         </div>
 
-        <!-- ── ABOUT ── -->
+        <!-- ══════════════════════════════════════
+             ABOUT
+        ══════════════════════════════════════ -->
         <div class="section-content" id="sec-about">
           <div class="sec-head">
             <div class="sec-tag">Project Overview</div>
             <div class="sec-title">About 3DSBank AI</div>
             <div class="sec-desc">Machine learning platform for banking intelligence — churn prediction and loan eligibility.</div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
-            <div style="background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);padding:22px;">
-              <h3 style="font-family:var(--serif);font-size:16px;color:var(--white);margin-bottom:14px;">🤖 Models Used</h3>
-              <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:12px;font-family:var(--mono);color:var(--muted);">
+          <div class="two-col">
+            <div class="info-card">
+              <h3>🤖 Models Used</h3>
+              <ul>
                 <li>⚠️ ExtraTree Classifier — Churn (90.46%)</li>
                 <li>🌳 Random Forest — Loan Eligibility (66.67%)</li>
                 <li>🗳️ Voting Classifier — GaussianNB + AdaBoost + KNN</li>
@@ -738,9 +1163,9 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
                 <li>🧠 Neural Network — Chatbot (53 intents)</li>
               </ul>
             </div>
-            <div style="background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);padding:22px;">
-              <h3 style="font-family:var(--serif);font-size:16px;color:var(--white);margin-bottom:14px;">🔧 Tech Stack</h3>
-              <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:12px;font-family:var(--mono);color:var(--muted);">
+            <div class="info-card">
+              <h3>🔧 Tech Stack</h3>
+              <ul>
                 <li>🐍 Python 3.9 · pandas · numpy · sklearn</li>
                 <li>🌲 Scikit-Learn — All ML classifiers</li>
                 <li>🧠 TensorFlow / Keras — Chatbot model</li>
@@ -749,19 +1174,19 @@ body{background:var(--navy);color:var(--cream);font-family:var(--sans);min-heigh
                 <li>📊 Seaborn / Matplotlib — Visualizations</li>
               </ul>
             </div>
-            <div style="background:var(--navy2);border:1px solid var(--bord2);border-radius:var(--r16);padding:22px;grid-column:1/-1;">
-              <h3 style="font-family:var(--serif);font-size:16px;color:var(--white);margin-bottom:14px;">📁 Project Files</h3>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;font-family:var(--mono);color:var(--muted);">
-                <span>M1.ipynb — Data Preprocessing (Churn)</span>
-                <span>M2.ipynb — Data Visualization (Churn)</span>
-                <span>M3-VOT-CH.ipynb — Voting + ExtraTree</span>
-                <span>M5-RFC-LE.ipynb — Random Forest (Loan)</span>
-                <span>M6-MULTI_MODEL-LE_.ipynb — Stacking</span>
-                <span>M1_CB.ipynb / M2_CB.ipynb — Chatbot</span>
-                <span>CHURN.pkl · LOAN_final1.pkl</span>
-                <span>stacked_model.pkl</span>
-                <span>churn.ipynb / loan.ipynb — Reports</span>
-              </div>
+          </div>
+          <div class="info-card" style="margin-top:0">
+            <h3>📁 Project Files</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;font-family:var(--mono);color:var(--muted);margin-top:4px">
+              <span>M1.ipynb — Data Preprocessing (Churn)</span>
+              <span>M2.ipynb — Data Visualization (Churn)</span>
+              <span>M3-VOT-CH.ipynb — Voting + ExtraTree</span>
+              <span>M5-RFC-LE.ipynb — Random Forest (Loan)</span>
+              <span>M6-MULTI_MODEL-LE_.ipynb — Stacking</span>
+              <span>M1_CB.ipynb / M2_CB.ipynb — Chatbot</span>
+              <span>CHURN.pkl · LOAN_final1.pkl</span>
+              <span>stacked_model.pkl</span>
+              <span>churn.ipynb / loan.ipynb — Reports</span>
             </div>
           </div>
         </div>
@@ -777,16 +1202,65 @@ let users = {};
 try { users = JSON.parse(localStorage.getItem('nb_users') || '{}'); } catch(e){}
 let currentUser = null;
 
+/* ─── ROLE CONFIG ─── */
+const roleConfig = {
+  Analyst: {
+    dashboardId: 'dashboard-analyst',
+    badgeClass: 'analyst',
+    label: 'Data Analyst',
+    nav: [
+      { section: 'dashboard-analyst', icon: '🏠', label: 'Dashboard' },
+      { section: 'churn', icon: '⚠️', label: 'Churn Predictor' },
+      { section: 'loan', icon: '🏦', label: 'Loan Eligibility' },
+      { section: 'about', icon: 'ℹ️', label: 'About Project' }
+    ]
+  },
+  Manager: {
+    dashboardId: 'dashboard-manager',
+    badgeClass: 'manager',
+    label: 'Branch Manager',
+    nav: [
+      { section: 'dashboard-manager', icon: '🏢', label: 'Dashboard' },
+      { section: 'churn', icon: '⚠️', label: 'Churn Risk Check' },
+      { section: 'loan', icon: '🏦', label: 'Loan Assessment' },
+      { section: 'about', icon: 'ℹ️', label: 'Platform Info' }
+    ]
+  },
+  Admin: {
+    dashboardId: 'dashboard-admin',
+    badgeClass: 'admin',
+    label: 'Administrator',
+    nav: [
+      { section: 'dashboard-admin', icon: '🛡️', label: 'Admin Dashboard' },
+      { section: 'churn', icon: '⚠️', label: 'Churn Predictor' },
+      { section: 'loan', icon: '🏦', label: 'Loan Eligibility' },
+      { section: 'about', icon: 'ℹ️', label: 'System Info' }
+    ]
+  },
+  Officer: {
+    dashboardId: 'dashboard-officer',
+    badgeClass: 'officer',
+    label: 'Loan Officer',
+    nav: [
+      { section: 'dashboard-officer', icon: '📝', label: 'Dashboard' },
+      { section: 'loan', icon: '🏦', label: 'Loan Eligibility' },
+      { section: 'about', icon: 'ℹ️', label: 'About Platform' }
+    ]
+  }
+};
+
 /* ─── PAGE NAV ─── */
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  const el = document.getElementById(id);
-  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
 }
 
 /* ─── SECTION NAV ─── */
 const sectionTitles = {
-  dashboard: 'Dashboard',
+  'dashboard-analyst': 'Analyst Dashboard',
+  'dashboard-manager': 'Branch Manager Dashboard',
+  'dashboard-admin': 'Admin Dashboard',
+  'dashboard-officer': 'Loan Officer Dashboard',
   churn: 'Churn Predictor',
   loan: 'Loan Eligibility',
   about: 'About Project'
@@ -794,14 +1268,35 @@ const sectionTitles = {
 
 function showSection(id) {
   document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
+  const el = document.getElementById('sec-' + id);
+  if (el) el.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  // Activate matching nav item
-  const navMap = {dashboard:0, churn:1, loan:2, about:3};
-  const items = document.querySelectorAll('.nav-item');
-  if (items[navMap[id]]) items[navMap[id]].classList.add('active');
-  if (document.getElementById('topbar-title'))
-    document.getElementById('topbar-title').textContent = sectionTitles[id] || id;
+  const activeNav = document.querySelector(`.nav-item[data-section="${id}"]`);
+  if (activeNav) activeNav.classList.add('active');
+  const titleEl = document.getElementById('topbar-title');
+  if (titleEl) titleEl.textContent = sectionTitles[id] || id;
+}
+
+function goBackToDashboard() {
+  if (!currentUser) return;
+  const cfg = roleConfig[currentUser.role];
+  if (cfg) showSection(cfg.dashboardId);
+}
+
+/* ─── BUILD SIDEBAR NAV ─── */
+function buildNav(role) {
+  const cfg = roleConfig[role];
+  if (!cfg) return;
+  const nav = document.getElementById('sidebar-nav');
+  nav.innerHTML = '<div class="nav-section-label">Navigation</div>';
+  cfg.nav.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'nav-item';
+    div.dataset.section = item.section;
+    div.innerHTML = `<span class="ni">${item.icon}</span>${item.label}`;
+    div.onclick = () => showSection(item.section);
+    nav.appendChild(div);
+  });
 }
 
 /* ─── REGISTER ─── */
@@ -838,13 +1333,55 @@ function doLogin() {
 
 function loginUser(user) {
   currentUser = user;
+  const cfg = roleConfig[user.role] || roleConfig['Analyst'];
+
+  // Update sidebar
   document.getElementById('sb-username').textContent = user.name;
-  document.getElementById('sb-role').textContent = user.role;
+  document.getElementById('sb-role').textContent = cfg.label;
   document.getElementById('sb-avatar').textContent = user.name.charAt(0).toUpperCase();
   document.getElementById('topbar-user').textContent = user.name;
-  document.getElementById('dash-welcome').textContent = 'Welcome back, ' + user.name.split(' ')[0] + '! 👋';
+
+  // Role badge
+  const badge = document.getElementById('topbar-role-badge');
+  badge.textContent = cfg.label;
+  badge.className = 'role-badge ' + cfg.badgeClass;
+
+  // Build role-specific nav
+  buildNav(user.role);
+
+  // Set welcome message
+  const firstName = user.name.split(' ')[0];
+  const welcomeIds = ['dash-welcome','dash-welcome-manager','dash-welcome-admin','dash-welcome-officer'];
+  welcomeIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = 'Welcome back, ' + firstName + '! 👋';
+  });
+
+  // Update admin user table
+  if (user.role === 'Admin') {
+    refreshAdminUserTable();
+  }
+
   showPage('page-app');
-  showSection('dashboard');
+  showSection(cfg.dashboardId);
+}
+
+function refreshAdminUserTable() {
+  const tbody = document.getElementById('admin-user-table');
+  const count = document.getElementById('admin-user-count');
+  const allUsers = Object.values(users);
+  count.textContent = allUsers.length;
+  if (allUsers.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" style="color:var(--muted);text-align:center;padding:20px">No users registered yet</td></tr>';
+    return;
+  }
+  const roleColors = { Analyst:'blue', Manager:'gold', Admin:'purple', Officer:'green' };
+  tbody.innerHTML = allUsers.map(u => `
+    <tr>
+      <td>${u.name}</td>
+      <td><span class="badge-sm ${roleColors[u.role]||'blue'}">${u.role}</span></td>
+      <td><span class="badge-sm green">● Active</span></td>
+    </tr>`).join('');
 }
 
 function doLogout() {
@@ -863,18 +1400,16 @@ function predictChurn() {
   const balance= +document.getElementById('c-balance').value;
   const tenure = +document.getElementById('c-tenure').value;
   const gender = +document.getElementById('c-gender').value;
-
   let risk = 0; const tags = [];
-  if (age > 45)      { risk += 28; tags.push('Age > 45'); }
+  if (age > 45) { risk += 28; tags.push('Age > 45'); }
   else if (age > 35) { risk += 12; }
-  if (!active)       { risk += 26; tags.push('Inactive member'); }
-  if (prods >= 3)    { risk += 22; tags.push(prods + ' products'); }
-  if (credit < 500)  { risk += 14; tags.push('Low credit score'); }
+  if (!active) { risk += 26; tags.push('Inactive member'); }
+  if (prods >= 3) { risk += 22; tags.push(prods + ' products'); }
+  if (credit < 500) { risk += 14; tags.push('Low credit score'); }
   else if(credit<600){ risk += 7; }
   if (balance === 0) { risk += 10; tags.push('Zero balance'); }
-  if (tenure <= 1)   { risk += 8;  tags.push('Short tenure'); }
-  if (gender === 0)  { risk += 5; }
-
+  if (tenure <= 1) { risk += 8; tags.push('Short tenure'); }
+  if (gender === 0) { risk += 5; }
   const isChurn = risk >= 38;
   const conf = Math.min(95, Math.max(30, isChurn ? risk + 10 : 100 - risk));
   const box = document.getElementById('churn-result');
@@ -909,21 +1444,19 @@ function predictLoan() {
   const amount  = +document.getElementById('l-amount').value;
   const term    = +document.getElementById('l-term').value;
   const area    = +document.getElementById('l-area').value;
-
   let score = 50; const tags = [];
   const total = income + coinc;
   const ratio = amount / (total || 1);
-  if (ratio < 3)       { score += 18; tags.push('Good debt ratio'); }
-  else if (ratio > 8)  { score -= 18; tags.push('High loan ratio'); }
-  if (married)         { score += 10; tags.push('Married'); }
-  if (edu === 0)       { score += 10; tags.push('Graduate'); }
-  if (area === 1)      { score += 10; tags.push('Semiurban area'); }
+  if (ratio < 3) { score += 18; tags.push('Good debt ratio'); }
+  else if (ratio > 8) { score -= 18; tags.push('High loan ratio'); }
+  if (married) { score += 10; tags.push('Married'); }
+  if (edu === 0) { score += 10; tags.push('Graduate'); }
+  if (area === 1) { score += 10; tags.push('Semiurban area'); }
   else if (area === 2) { score += 5; }
-  if (dep >= 3)        { score -= 10; tags.push('3+ dependents'); }
-  if (self_)           { score -= 5;  tags.push('Self-employed'); }
-  if (term >= 360)     { score += 5;  tags.push('Standard term'); }
-  if (total > 8000)    { score += 8;  tags.push('High income'); }
-
+  if (dep >= 3) { score -= 10; tags.push('3+ dependents'); }
+  if (self_) { score -= 5; tags.push('Self-employed'); }
+  if (term >= 360) { score += 5; tags.push('Standard term'); }
+  if (total > 8000) { score += 8; tags.push('High income'); }
   const approved = score >= 55;
   const conf = Math.min(92, Math.max(35, approved ? score : 100 - score));
   const box = document.getElementById('loan-result');
@@ -947,6 +1480,28 @@ function predictLoan() {
   setTimeout(()=>{ const f=box.querySelector('.rb-bar-fill'); if(f) f.style.width=f.dataset.v+'%'; },60);
 }
 
+/* ─── LIVE RATIO CALCULATOR ─── */
+function updateRatio() {
+  const income  = +document.getElementById('l-income').value || 0;
+  const coinc   = +document.getElementById('l-coincome').value || 0;
+  const amount  = +document.getElementById('l-amount').value || 0;
+  const disp    = document.getElementById('ratio-display');
+  const lbl     = document.getElementById('ratio-label');
+  if (!disp) return;
+  const total = income + coinc;
+  if (!total || !amount) { disp.textContent = '—'; disp.style.color = 'var(--muted)'; lbl.textContent = 'Enter income and loan amount above'; return; }
+  const ratio = (amount / total).toFixed(2);
+  disp.textContent = ratio + '×';
+  if (ratio < 3) { disp.style.color = 'var(--green)'; lbl.textContent = '✅ Excellent ratio — strong approval odds'; }
+  else if (ratio < 5) { disp.style.color = 'var(--gold2)'; lbl.textContent = '⚠️ Moderate ratio — likely approved'; }
+  else if (ratio < 8) { disp.style.color = 'var(--orange)'; lbl.textContent = '⚠️ High ratio — borderline, manual review likely'; }
+  else { disp.style.color = 'var(--red)'; lbl.textContent = '❌ Very high ratio — likely rejected'; }
+}
+
+document.addEventListener('input', e => {
+  if (['l-income','l-coincome','l-amount'].includes(e.target.id)) updateRatio();
+});
+
 /* ─── ENTER KEY ─── */
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
@@ -954,6 +1509,15 @@ document.addEventListener('keydown', e => {
   if (document.getElementById('page-login').classList.contains('active')) doLogin();
   else if (document.getElementById('page-register').classList.contains('active')) doRegister();
 });
+
+/* ─── ANIMATE PROGRESS BARS ON LOAD ─── */
+setTimeout(() => {
+  document.querySelectorAll('.progress-fill').forEach(el => {
+    const w = el.style.width;
+    el.style.width = '0';
+    setTimeout(() => { el.style.width = w; }, 100);
+  });
+}, 200);
 </script>
 </body>
 </html>
